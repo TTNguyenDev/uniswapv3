@@ -31,9 +31,10 @@ contract UniswapV3PoolTest is Test {
         token1 = new ERC20Mintable("USDC", "USDC", 18);
     }
 
-    function setupTestCase(
-        TestCaseParams memory params
-    ) internal returns (uint256 poolBalance0, uint256 poolBalance1) {
+    function setupTestCase(TestCaseParams memory params)
+        internal
+        returns (uint256 poolBalance0, uint256 poolBalance1)
+    {
         token0.mint(address(this), params.wethBalance);
         token1.mint(address(this), params.usdcBalance);
 
@@ -176,13 +177,21 @@ contract UniswapV3PoolTest is Test {
     }
 
     // Callbacks
-    function uniswapV3SwapCallback(int256 amount0, int256 amount1) public {
+    function uniswapV3SwapCallback(
+        int256 amount0,
+        int256 amount1,
+        bytes calldata data
+    ) public {
+        UniswapV3Pool.CallbackData memory extra = abi.decode(
+            data,
+            (UniswapV3Pool.CallbackData)
+        );
         if (amount0 > 0 && transferInSwapCallback) {
-            token0.transfer(msg.sender, uint256(amount0));
+            IERC20(extra.token0).transfer(msg.sender, uint256(amount0));
         }
 
         if (amount1 > 0 && transferInSwapCallback) {
-            token1.transfer(msg.sender, uint256(amount1));
+            IERC20(extra.token1).transfer(msg.sender, uint256(amount1));
         }
     }
 
