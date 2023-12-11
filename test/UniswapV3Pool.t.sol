@@ -31,10 +31,9 @@ contract UniswapV3PoolTest is Test {
         token1 = new ERC20Mintable("USDC", "USDC", 18);
     }
 
-    function setupTestCase(TestCaseParams memory params)
-        internal
-        returns (uint256 poolBalance0, uint256 poolBalance1)
-    {
+    function setupTestCase(
+        TestCaseParams memory params
+    ) internal returns (uint256 poolBalance0, uint256 poolBalance1) {
         token0.mint(address(this), params.wethBalance);
         token1.mint(address(this), params.usdcBalance);
 
@@ -46,11 +45,19 @@ contract UniswapV3PoolTest is Test {
         );
 
         if (params.mintLiqudity) {
+            UniswapV3Pool.CallbackData memory extra = UniswapV3Pool
+                .CallbackData({
+                    token0: address(token0),
+                    token1: address(token1),
+                    payer: address(this)
+                });
+
             (poolBalance0, poolBalance1) = pool.mint(
                 address(this),
                 params.lowerTick,
                 params.upperTick,
-                params.liquidity
+                params.liquidity,
+                abi.encode(extra)
             );
         }
 

@@ -9,5 +9,5 @@ COPY . .
 RUN forge build
 RUN forge test
 
-# Set the entrypoint to the forge deployment command
+# Set the entrypoint to the forge command
 ENTRYPOINT ["forge", "create"]
