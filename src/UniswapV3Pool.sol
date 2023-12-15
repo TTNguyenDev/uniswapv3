@@ -239,11 +239,11 @@ state.tick = zeroForOne ? step.nextTick - 1 : step.nextTick;
             }
         }
 
-        if (liquidity_ != state.liquidity) liquidity = state.liquidity;
-
         if (state.tick != slot0_.tick) {
             (slot0.sqrtPriceX96, slot0.tick) = (state.sqrtPriceX96, state.tick);
         }
+
+        if (liquidity_ != state.liquidity) liquidity = state.liquidity;
 
         (amount0, amount1) = zeroForOne ? (int256(amountSpecified - state.amountSpecifiedRemaining), -int256(state.amountCalculated)) : (-int256(state.amountCalculated), int256(amountSpecified - state.amountSpecifiedRemaining)); 
 
