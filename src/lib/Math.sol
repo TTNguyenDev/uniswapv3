@@ -2,7 +2,7 @@
 pragma solidity ^0.8.14;
 
 import "./FixedPoint96.sol";
-import "prb-math/PRBMath.sol";
+import {mulDiv} from "@prb/math/src/Common.sol";
 
 library Math {
     /// @notice Calculates amount0 delta between two prices
@@ -104,17 +104,18 @@ library Math {
         uint256 b,
         uint256 denominator
     ) internal pure returns (uint256 result) {
-        result = PRBMath.mulDiv(a, b, denominator);
+        result = mulDiv(a, b, denominator);
         if (mulmod(a, b, denominator) > 0) {
             require(result < type(uint256).max);
             result++;
         }
     }
 
-    function divRoundingUp(
-        uint256 numerator,
-        uint256 denominator
-    ) internal pure returns (uint256 result) {
+    function divRoundingUp(uint256 numerator, uint256 denominator)
+        internal
+        pure
+        returns (uint256 result)
+    {
         assembly {
             result := add(
                 div(numerator, denominator),
