@@ -1,6 +1,12 @@
 {
-	"dependencies": {
-		"@prb/math": "^4.0.2",
-		"prb-math": "^2.4.3"
-	}
+  "dependencies": {
+    "@prb/math": "^4.0.2",
+    "solidity-bytes-utils": "^0.8.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "prettier-plugin-solidity": "^1.2.0",
+    "solhint-community": "^3.7.0",
+    "solhint-plugin-prettier": "^0.1.0"
+  }
 }

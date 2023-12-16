@@ -12,8 +12,9 @@ library Math {
         uint160 sqrtPriceBX96,
         uint128 liquidity
     ) internal pure returns (uint256 amount0) {
-        if (sqrtPriceAX96 > sqrtPriceBX96)
+        if (sqrtPriceAX96 > sqrtPriceBX96) {
             (sqrtPriceAX96, sqrtPriceBX96) = (sqrtPriceBX96, sqrtPriceAX96);
+        }
 
         require(sqrtPriceAX96 > 0);
 
@@ -34,8 +35,9 @@ library Math {
         uint160 sqrtPriceBX96,
         uint128 liquidity
     ) internal pure returns (uint256 amount1) {
-        if (sqrtPriceAX96 > sqrtPriceBX96)
+        if (sqrtPriceAX96 > sqrtPriceBX96) {
             (sqrtPriceAX96, sqrtPriceBX96) = (sqrtPriceBX96, sqrtPriceAX96);
+        }
 
         amount1 = mulDivRoundingUp(
             liquidity,
@@ -111,11 +113,10 @@ library Math {
         }
     }
 
-    function divRoundingUp(uint256 numerator, uint256 denominator)
-        internal
-        pure
-        returns (uint256 result)
-    {
+    function divRoundingUp(
+        uint256 numerator,
+        uint256 denominator
+    ) internal pure returns (uint256 result) {
         assembly {
             result := add(
                 div(numerator, denominator),
